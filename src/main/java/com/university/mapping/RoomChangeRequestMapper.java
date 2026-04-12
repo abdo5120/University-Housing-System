@@ -1,10 +1,17 @@
 package com.university.mapping;
 
 import com.university.Repository.AdminRepository;
-import com.university.Repository.*;
-import com.university.dtos.request.*;
+import com.university.Repository.RoomRepository;
+import com.university.Repository.StudentRepository;
+import com.university.dtos.request.RoomChangeRequestCreateDto;
+import com.university.dtos.request.RoomChangeRequestUpdateDto;
 import com.university.dtos.response.RoomChangeResponseDto;
-import com.university.entity.*;
+import com.university.entity.Admin;
+import com.university.entity.Room;
+import com.university.entity.RoomChangeRequest;
+import com.university.entity.Student;
+import com.university.exceptions.ResourceNotFoundException;
+import com.university.exceptions.ResourceAlreadyExistsException;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -49,17 +56,17 @@ public abstract class RoomChangeRequestMapper {
                                       @MappingTarget RoomChangeRequest entity) {
 
         Student student = studentRepository.findByUniversityId(dto.getStudentUniversityId())
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with university ID: " + dto.getStudentUniversityId()));
 
         Room currentRoom = roomRepository.findByRoomNumber(dto.getCurrentRoomNumber())
-                .orElseThrow(() -> new RuntimeException("Current room not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Current room not found with number: " + dto.getCurrentRoomNumber()));
 
         entity.setStudent(student);
         entity.setCurrentRoom(currentRoom);
 
         if (dto.getRequestedRoomNumber() != null) {
             Room requestedRoom = roomRepository.findByRoomNumber(dto.getRequestedRoomNumber())
-                    .orElseThrow(() -> new RuntimeException("Requested room not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Requested room not found with number: " + dto.getRequestedRoomNumber()));
             entity.setRequestedRoom(requestedRoom);
         }
     }
@@ -81,12 +88,12 @@ public abstract class RoomChangeRequestMapper {
                                       @MappingTarget RoomChangeRequest entity) {
 
         Admin admin = adminRepository.findById(dto.getReviewedById())
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Admin not found with ID: " + dto.getReviewedById()));
         entity.setReviewedBy(admin);
 
         if (dto.getRequestedRoomNumber() != null) {
             Room requestedRoom = roomRepository.findByRoomNumber(dto.getRequestedRoomNumber())
-                    .orElseThrow(() -> new RuntimeException("Requested room not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Requested room not found with number: " + dto.getRequestedRoomNumber()));
             entity.setRequestedRoom(requestedRoom);
         }
     }
