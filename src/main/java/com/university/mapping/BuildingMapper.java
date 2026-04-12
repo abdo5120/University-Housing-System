@@ -5,7 +5,6 @@ import com.university.dtos.response.BuildingResponseDto;
 import com.university.entity.Building;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
