@@ -8,7 +8,6 @@ import com.university.dtos.request.MaintenanceRequestCreateDto;
 import com.university.dtos.request.MaintenanceRequestUpdateDto;
 import com.university.dtos.response.MaintenanceResponseDto;
 import com.university.entity.*;
-import com.university.exceptions.ResourceNotFoundException;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -53,13 +52,13 @@ public abstract class MaintenanceRequestMapper {
                                       @MappingTarget MaintenanceRequest entity) {
 
         Student student = studentRepository.findById(dto.getStudentId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + dto.getStudentId()));
+                .orElseThrow(() -> new RuntimeException("Student not found"));
 
         Building building = buildingRepository.findByBuildingName(dto.getBuildingName())
-                .orElseThrow(() -> new ResourceNotFoundException("Building not found with name: " + dto.getBuildingName()));
+                .orElseThrow(() -> new RuntimeException("Building not found"));
 
         Room room = roomRepository.findByRoomNumber(dto.getRoomNumber())
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found with number: " + dto.getRoomNumber()));
+                .orElseThrow(() -> new RuntimeException("Room not found"));
 
         entity.setStudent(student);
         entity.setBuilding(building);
@@ -81,7 +80,7 @@ public abstract class MaintenanceRequestMapper {
                                       @MappingTarget MaintenanceRequest entity) {
         if (dto.getAssignedStaffId() != null) {
             MaintenanceStaff staff = maintenanceStaffRepository.findById(dto.getAssignedStaffId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Maintenance staff not found with ID: " + dto.getAssignedStaffId()));
+                    .orElseThrow(() -> new RuntimeException("Staff not found"));
             entity.setAssignedStaff(staff);
         }
     }

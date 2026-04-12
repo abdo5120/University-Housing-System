@@ -10,7 +10,6 @@ import com.university.entity.Admin;
 import com.university.entity.Room;
 import com.university.entity.RoomAssignment;
 import com.university.entity.Student;
-import com.university.exceptions.ResourceNotFoundException;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -51,13 +50,13 @@ public abstract class RoomAssignmentMapper {
     protected void setCreateRelations(RoomAssignmentCreateDto dto,
                                       @MappingTarget RoomAssignment entity) {
         Student student = studentRepository.findByUniversityId(dto.getUniversityId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with university ID: " + dto.getUniversityId()));
+                .orElseThrow(() -> new RuntimeException("Student not found"));
 
         Room room = roomRepository.findByRoomNumber(dto.getRoomNumber())
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found with number: " + dto.getRoomNumber()));
+                .orElseThrow(() -> new RuntimeException("Room not found"));
 
         Admin admin = adminRepository.findById(dto.getAssignedById())
-                .orElseThrow(() -> new ResourceNotFoundException("Admin not found with ID: " + dto.getAssignedById()));
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
 
         entity.setStudent(student);
         entity.setRoom(room);
@@ -78,7 +77,7 @@ public abstract class RoomAssignmentMapper {
     protected void setUpdateRelations(RoomAssignmentUpdateDto dto,
                                       @MappingTarget RoomAssignment entity) {
         Room room = roomRepository.findByRoomNumber(dto.getRoomNumber())
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found with number: " + dto.getRoomNumber()));
+                .orElseThrow(() -> new RuntimeException("Room not found"));
         entity.setRoom(room);
     }
 }
