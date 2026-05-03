@@ -390,4 +390,4 @@ The API is available at `http://localhost:8081`
 
 **Abdelkawy Nasr** — Java Backend Developer
 [GitHub](https://github.com/abdo5120) |
-[LinkedIn](https://github.com/abdo5120)
+[LinkedIn](https://www.linkedin.com/in/abdelkawei)
