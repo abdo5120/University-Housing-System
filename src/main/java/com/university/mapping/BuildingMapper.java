@@ -15,17 +15,9 @@ public interface BuildingMapper {
 
     List<BuildingResponseDto> toDtoList(List<Building> buildings);
 
-
     @Mapping(target = "buildingId", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "rooms", ignore = true)
     @Mapping(target = "maintenanceRequests", ignore = true)
     Building toEntity(BuildingRequestDto dto);
-/*
-    @Mapping(target = "buildingId", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "rooms", ignore = true)
-    @Mapping(target = "maintenanceRequests", ignore = true)
-    void updateEntityFromDto(BuildingRequestDto dto, @MappingTarget Building building);
-*/
 }

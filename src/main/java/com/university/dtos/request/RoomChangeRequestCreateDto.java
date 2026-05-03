@@ -15,5 +15,6 @@ public class RoomChangeRequestCreateDto {
     @NotNull(message = "Current room Number is required")
     private String currentRoomNumber;
 
-    private String requestedRoomNumber; // Optional, can be null if the student has no specific room in mind
+    // Optional, can be null if the student has no specific room in mind
+    private String requestedRoomNumber;
 }

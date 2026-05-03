@@ -26,7 +26,6 @@ public abstract class RoomMapper {
 
     public abstract List<RoomResponseDto> toDtoList(List<Room> rooms);
 
-    // DTO → Entity
     @Mapping(target = "roomId", ignore = true)
     @Mapping(target = "building", ignore = true)
     @Mapping(target = "roomAssignments", ignore = true)
@@ -41,16 +40,4 @@ public abstract class RoomMapper {
                 .orElseThrow(() -> new ResourceNotFoundException("Building not found with name: " + dto.getBuildingName()));
         room.setBuilding(building);
     }
-
-    /*
-    // Update existing entity (for PUT requests)
-    @Mapping(target = "roomId", ignore = true)
-    @Mapping(target = "building", ignore = true)
-    @Mapping(target = "roomAssignments", ignore = true)
-    @Mapping(target = "requestedRoomChanges", ignore = true)
-    @Mapping(target = "currentRoomChanges", ignore = true)
-    @Mapping(target = "maintenanceRequests", ignore = true)
-    void updateEntityFromDto(RoomRequestDto dto, @MappingTarget Room room);
-
-     */
 }

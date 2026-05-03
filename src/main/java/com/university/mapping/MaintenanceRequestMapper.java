@@ -17,8 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {StudentMapper.class, MaintenanceStaffMapper.class,
-                                            BuildingMapper.class, RoomMapper.class})
+@Mapper(componentModel = "spring",
+        uses = {StudentMapper.class, MaintenanceStaffMapper.class,
+                BuildingMapper.class, RoomMapper.class})
 public abstract class MaintenanceRequestMapper {
 
     @Autowired
